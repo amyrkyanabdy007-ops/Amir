@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تی‌شرت استور | فروشگاه تخصصی تی‌شرت</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-tshirt"></i>
+                    <span>تی‌شرت استور</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" class="active">خانه</a></li>
+                    <li><a href="products.html">محصولات</a></li>
+                    <li><a href="about.html">درباره ما</a></li>
+                    <li><a href="contact.html">تماس با ما</a></li>
+                        <li><a href="admin.html" style="color:#f59e0b;">پنل مدیریت</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>تی‌شرت‌های باکیفیت، استایل منحصر به فرد</h1>
+                <p>مجموعه‌ای از بهترین تی‌شرت‌های مردانه و زنانه با طراحی مدرن و جنس درجه یک</p>
+                <a href="products.html" class="btn btn-primary">مشاهده محصولات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>ارسال سریع</h3>
+                    <p>ارسال رایگان برای سفارش‌های بالای ۵۰۰ هزار تومان</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-undo"></i>
+                    <h3>۷ روز ضمانت بازگشت</h3>
+                    <p>اگر راضی نبودید به راحتی مرجوع کنید</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>پرداخت امن</h3>
+                    <p>پرداخت از طریق درگاه‌های معتبر بانکی</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>پشتیبانی ۲۴ ساعته</h3>
+                    <p>همیشه در کنار شما هستیم</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <h2>محصولات ویژه</h2>
+                <a href="products.html" class="view-all">مشاهده همه ←</a>
+            </div>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be loaded by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">دسته‌بندی‌ها</h2>
+            <div class="category-grid">
+                <a href="products.html?category=men" class="category-card">
+                    <div class="category-img men"></div>
+                    <h3>تی‌شرت مردانه</h3>
+                </a>
+                <a href="products.html?category=women" class="category-card">
+                    <div class="category-img women"></div>
+                    <h3>تی‌شرت زنانه</h3>
+                </a>
+                <a href="products.html?category=unisex" class="category-card">
+                    <div class="category-img unisex"></div>
+                    <h3>یونیسکس</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>از تخفیف‌ها باخبر شو!</h2>
+                <p>ایمیلت رو وارد کن تا از جدیدترین محصولات و تخفیف‌ها مطلع بشی</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="ایمیل شما" required>
+                    <button type="submit" class="btn btn-primary">عضویت</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>تی‌شرت استور</h3>
+                    <p>فروشگاه تخصصی تی‌شرت با بهترین کیفیت و قیمت مناسب</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>دسترسی سریع</h4>
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li><a href="products.html">محصولات</a></li>
+                        <li><a href="about.html">درباره ما</a></li>
+                        <li><a href="contact.html">تماس با ما</a></li>
+                        <li><a href="admin.html" style="color:#f59e0b;">پنل مدیریت</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>خدمات مشتریان</h4>
+                    <ul>
+                        <li><a href="#">راهنمای خرید</a></li>
+                        <li><a href="#">شرایط بازگشت</a></li>
+                        <li><a href="#">پیگیری سفارش</a></li>
+                        <li><a href="#">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>تماس با ما</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                        <li><i class="fas fa-envelope"></i> info@tshirtstore.ir</li>
+                        <li><i class="fas fa-map-marker-alt"></i> تهران، خیابان ولیعصر</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© ۱۴۰۳ تی‌شرت استور. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>سبد خرید</h3>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>جمع کل:</span>
+                <span id="cartTotal">۰ تومان</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="checkoutBtn">ادامه خرید</button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محصولات | تی‌شرت استور</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-tshirt"></i>
+                    <span>تی‌شرت استور</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">خانه</a></li>
+                    <li><a href="products.html" class="active">محصولات</a></li>
+                    <li><a href="about.html">درباره ما</a></li>
+                    <li><a href="contact.html">تماس با ما</a></li>
+                        <li><a href="admin.html" style="color:#f59e0b;">پنل مدیریت</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>همه محصولات</h1>
+            <p>تی‌شرت‌های باکیفیت با بهترین قیمت</p>
+        </div>
+    </section>
+
+    <section class="products-page">
+        <div class="container">
+            <div class="products-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters">
+                    <div class="filter-group">
+                        <h3>دسته‌بندی</h3>
+                        <label><input type="radio" name="category" value="all" checked> همه</label>
+                        <label><input type="radio" name="category" value="men"> مردانه</label>
+                        <label><input type="radio" name="category" value="women"> زنانه</label>
+                        <label><input type="radio" name="category" value="unisex"> یونیسکس</label>
+                    </div>
+                    <div class="filter-group">
+                        <h3>سایز</h3>
+                        <label><input type="checkbox" name="size" value="S"> S</label>
+                        <label><input type="checkbox" name="size" value="M"> M</label>
+                        <label><input type="checkbox" name="size" value="L"> L</label>
+                        <label><input type="checkbox" name="size" value="XL"> XL</label>
+                        <label><input type="checkbox" name="size" value="XXL"> XXL</label>
+                    </div>
+                    <div class="filter-group">
+                        <h3>رنگ</h3>
+                        <div class="color-filters">
+                            <label class="color-option" title="مشکی"><input type="checkbox" name="color" value="black"><span style="background:#111"></span></label>
+                            <label class="color-option" title="سفید"><input type="checkbox" name="color" value="white"><span style="background:#fff;border:1px solid #ddd"></span></label>
+                            <label class="color-option" title="خاکستری"><input type="checkbox" name="color" value="gray"><span style="background:#888"></span></label>
+                            <label class="color-option" title="آبی"><input type="checkbox" name="color" value="blue"><span style="background:#2563eb"></span></label>
+                            <label class="color-option" title="قرمز"><input type="checkbox" name="color" value="red"><span style="background:#dc2626"></span></label>
+                            <label class="color-option" title="سبز"><input type="checkbox" name="color" value="green"><span style="background:#16a34a"></span></label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3>محدوده قیمت</h3>
+                        <input type="range" id="priceRange" min="100000" max="800000" step="50000" value="800000">
+                        <div class="price-display">
+                            <span>تا <span id="priceValue">۸۰۰٬۰۰۰</span> تومان</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-block" id="resetFilters">حذف فیلترها</button>
+                </aside>
+
+                <!-- Products Grid -->
+                <div class="products-content">
+                    <div class="products-toolbar">
+                        <span id="productCount">۰ محصول</span>
+                        <select id="sortSelect">
+                            <option value="default">مرتب‌سازی پیش‌فرض</option>
+                            <option value="price-asc">ارزان‌ترین</option>
+                            <option value="price-desc">گران‌ترین</option>
+                            <option value="name">نام</option>
+                        </select>
+                    </div>
+                    <div class="products-grid" id="allProducts">
+                        <!-- Products loaded by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>تی‌شرت استور</h3>
+                    <p>فروشگاه تخصصی تی‌شرت با بهترین کیفیت و قیمت مناسب</p>
+                </div>
+                <div class="footer-col">
+                    <h4>دسترسی سریع</h4>
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li><a href="products.html">محصولات</a></li>
+                        <li><a href="about.html">درباره ما</a></li>
+                        <li><a href="contact.html">تماس با ما</a></li>
+                        <li><a href="admin.html" style="color:#f59e0b;">پنل مدیریت</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>تماس با ما</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                        <li><i class="fas fa-envelope"></i> info@tshirtstore.ir</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© ۱۴۰۳ تی‌شرت استور. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>سبد خرید</h3>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>جمع کل:</span>
+                <span id="cartTotal">۰ تومان</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="checkoutBtn">ادامه خرید</button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>
