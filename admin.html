@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | تی‌شرت استور</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-wrapper { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
+        .admin-header h1 { font-size: 26px; }
+        .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .admin-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 24px; }
+        .admin-card h2 { font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 12px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid #e5e7eb; border-radius: 8px;
+            font-family: inherit; font-size: 14px; outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+        }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+        .checkbox-group label { display: flex; align-items: center; gap: 6px; font-weight: 400; cursor: pointer; font-size: 14px; }
+        .products-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .products-table th, .products-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+        .products-table th { background: #f9fafb; font-weight: 600; }
+        .badge-sm { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #fef3c7; color: #92400e; }
+        .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 6px; border: none; cursor: pointer; font-family: inherit; font-weight: 600; }
+        .btn-edit { background: #dbeafe; color: #1e40af; }
+        .btn-delete { background: #fee2e2; color: #991b1b; }
+        .btn-save { background: #111827; color: #fff; padding: 12px 28px; border-radius: 50px; border: none; font-family: inherit; font-weight: 600; cursor: pointer; font-size: 15px; }
+        .btn-secondary { background: #f3f4f6; color: #374151; padding: 10px 20px; border-radius: 50px; border: none; font-family: inherit; font-weight: 600; cursor: pointer; font-size: 14px; }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-success { background: #10b981; color: #fff; }
+        .alert { padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
+        .alert-info { background: #dbeafe; color: #1e40af; }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-box { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .stat-box .num { font-size: 28px; font-weight: 700; color: #f59e0b; }
+        .stat-box .label { font-size: 13px; color: #6b7280; margin-top: 4px; }
+        .password-gate { max-width: 400px; margin: 100px auto; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .password-gate input { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-family: inherit; font-size: 16px; margin-bottom: 16px; text-align: center; }
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
+        @media (max-width: 700px) { .form-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="passwordGate" class="password-gate">
+        <i class="fas fa-lock" style="font-size:40px;color:#f59e0b;margin-bottom:16px;"></i>
+        <h2>ورود به پنل مدیریت</h2>
+        <p style="color:#6b7280;margin-bottom:20px;font-size:14px;">رمز عبور سرور را وارد کنید<br>(پیش‌فرض: <strong>admin123</strong>)</p>
+        <input type="password" id="adminPassword" placeholder="رمز عبور" autofocus>
+        <button class="btn-save" style="width:100%;" onclick="doLogin()">ورود</button>
+    </div>
+
+    <div id="adminPanel" style="display:none;">
+        <header class="header">
+            <div class="container">
+                <div class="logo"><a href="index.html"><i class="fas fa-tshirt"></i><span>تی‌شرت استور</span></a></div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="index.html">مشاهده فروشگاه</a></li>
+                        <li><a href="admin.html" class="active">پنل مدیریت</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="admin-wrapper">
+            <div class="admin-header">
+                <h1><i class="fas fa-cog"></i> پنل مدیریت (سرور)</h1>
+                <div class="admin-actions">
+                    <button class="btn-secondary" onclick="loadOrders()"><i class="fas fa-receipt"></i> سفارش‌ها</button>
+                    <button class="btn-secondary btn-danger" onclick="doReset()"><i class="fas fa-undo"></i> بازگشت به پیش‌فرض</button>
+                    <button class="btn-secondary" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                </div>
+            </div>
+
+            <div id="alertBox" class="alert"></div>
+
+            <div class="stats-row">
+                <div class="stat-box"><div class="num" id="statTotal">0</div><div class="label">کل محصولات</div></div>
+                <div class="stat-box"><div class="num" id="statMen">0</div><div class="label">مردانه</div></div>
+                <div class="stat-box"><div class="num" id="statWomen">0</div><div class="label">زنانه</div></div>
+                <div class="stat-box"><div class="num" id="statUnisex">0</div><div class="label">یونیسکس</div></div>
+            </div>
+
+            <div class="admin-card">
+                <h2 id="formTitle"><i class="fas fa-plus-circle"></i> افزودن محصول جدید</h2>
+                <form id="productForm" onsubmit="saveProduct(event)">
+                    <input type="hidden" id="editId" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>نام محصول *</label>
+                            <input type="text" id="pName" required placeholder="مثلاً: تی‌شرت کلاسیک مشکی">
+                        </div>
+                        <div class="form-group">
+                            <label>دسته‌بندی *</label>
+                            <select id="pCategory" required>
+                                <option value="men">مردانه</option>
+                                <option value="women">زنانه</option>
+                                <option value="unisex">یونیسکس</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>قیمت (تومان) *</label>
+                            <input type="number" id="pPrice" required min="1000" step="1000" placeholder="289000">
+                        </div>
+                        <div class="form-group">
+                            <label>قیمت قبلی (اختیاری)</label>
+                            <input type="number" id="pOldPrice" min="1000" step="1000" placeholder="350000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>نشان</label>
+                            <select id="pBadge">
+                                <option value="">بدون نشان</option>
+                                <option value="جدید">جدید</option>
+                                <option value="پرفروش">پرفروش</option>
+                                <option value="تخفیف">تخفیف</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>سایزها *</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="size" value="S"> S</label>
+                                <label><input type="checkbox" name="size" value="M" checked> M</label>
+                                <label><input type="checkbox" name="size" value="L" checked> L</label>
+                                <label><input type="checkbox" name="size" value="XL" checked> XL</label>
+                                <label><input type="checkbox" name="size" value="XXL"> XXL</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>رنگ‌ها *</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="color" value="black" checked> مشکی</label>
+                                <label><input type="checkbox" name="color" value="white" checked> سفید</label>
+                                <label><input type="checkbox" name="color" value="gray"> خاکستری</label>
+                                <label><input type="checkbox" name="color" value="blue"> آبی</label>
+                                <label><input type="checkbox" name="color" value="red"> قرمز</label>
+                                <label><input type="checkbox" name="color" value="green"> سبز</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label>توضیحات</label>
+                            <textarea id="pDesc" rows="3" placeholder="توضیحات محصول..."></textarea>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:12px;">
+                        <button type="submit" class="btn-save" id="saveBtn"><i class="fas fa-save"></i> ذخیره</button>
+                        <button type="button" class="btn-secondary" id="cancelBtn" style="display:none;" onclick="cancelEdit()">انصراف</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-card">
+                <h2><i class="fas fa-list"></i> لیست محصولات (<span id="listCount">0</span>)</h2>
+                <div id="tableLoading" class="loading">در حال بارگذاری...</div>
+                <div style="overflow-x:auto;">
+                    <table class="products-table" id="productsTable" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>نام</th>
+                                <th>دسته</th>
+                                <th>قیمت</th>
+                                <th>نشان</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Modal-like section -->
+            <div class="admin-card" id="ordersSection" style="display:none;">
+                <h2><i class="fas fa-receipt"></i> سفارش‌ها</h2>
+                <div id="ordersList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        let adminPass = '';
+        let adminProducts = [];
+
+        function doLogin() {
+            adminPass = document.getElementById('adminPassword').value;
+            if (!adminPass) { alert('رمز را وارد کنید'); return; }
+            // Test by fetching products (public) then try a protected action later
+            sessionStorage.setItem('tshirtAdminPass', adminPass);
+            sessionStorage.setItem('tshirtAdminLoggedIn', '1');
+            showPanel();
+            loadProducts();
+        }
+
+        function doLogout() {
+            sessionStorage.removeItem('tshirtAdminPass');
+            sessionStorage.removeItem('tshirtAdminLoggedIn');
+            location.reload();
+        }
+
+        function showPanel() {
+            document.getElementById('passwordGate').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+        }
+
+        if (sessionStorage.getItem('tshirtAdminLoggedIn') === '1') {
+            adminPass = sessionStorage.getItem('tshirtAdminPass') || 'admin123';
+            showPanel();
+            loadProducts();
+        }
+
+        document.getElementById('adminPassword').addEventListener('keydown', e => {
+            if (e.key === 'Enter') doLogin();
+        });
+
+        function showAlert(msg, type = 'success') {
+            const box = document.getElementById('alertBox');
+            box.className = 'alert alert-' + type;
+            box.textContent = msg;
+            box.style.display = 'block';
+            setTimeout(() => box.style.display = 'none', 4000);
+        }
+
+        async function loadProducts() {
+            document.getElementById('tableLoading').style.display = 'block';
+            document.getElementById('productsTable').style.display = 'none';
+            try {
+                adminProducts = await fetchProducts();
+                renderTable();
+                updateStats();
+            } catch (err) {
+                showAlert('خطا در بارگذاری محصولات از سرور: ' + err.message, 'error');
+            }
+            document.getElementById('tableLoading').style.display = 'none';
+            document.getElementById('productsTable').style.display = 'table';
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').textContent = adminProducts.length;
+            document.getElementById('statMen').textContent = adminProducts.filter(p => p.category === 'men').length;
+            document.getElementById('statWomen').textContent = adminProducts.filter(p => p.category === 'women').length;
+            document.getElementById('statUnisex').textContent = adminProducts.filter(p => p.category === 'unisex').length;
+            document.getElementById('listCount').textContent = adminProducts.length;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('productsTableBody');
+            const catNames = { men: 'مردانه', women: 'زنانه', unisex: 'یونیسکس' };
+            tbody.innerHTML = adminProducts.map(p => `
+                <tr>
+                    <td>${p.id}</td>
+                    <td><strong>${p.name}</strong></td>
+                    <td>${catNames[p.category] || p.category}</td>
+                    <td>${Number(p.price).toLocaleString('fa-IR')} ت</td>
+                    <td>${p.badge ? `<span class="badge-sm">${p.badge}</span>` : '—'}</td>
+                    <td>
+                        <button class="btn-sm btn-edit" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn-sm btn-delete" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function saveProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('pName').value.trim();
+            const category = document.getElementById('pCategory').value;
+            const price = parseInt(document.getElementById('pPrice').value);
+            const oldPriceVal = document.getElementById('pOldPrice').value;
+            const oldPrice = oldPriceVal ? parseInt(oldPriceVal) : null;
+            const badge = document.getElementById('pBadge').value || null;
+            const desc = document.getElementById('pDesc').value.trim();
+            const sizes = [...document.querySelectorAll('input[name="size"]:checked')].map(el => el.value);
+            const colors = [...document.querySelectorAll('input[name="color"]:checked')].map(el => el.value);
+
+            if (sizes.length === 0 || colors.length === 0) {
+                alert('حداقل یک سایز و یک رنگ انتخاب کنید');
+                return;
+            }
+
+            const payload = { name, category, price, oldPrice, badge, sizes, colors, description: desc };
+            const editId = document.getElementById('editId').value;
+
+            try {
+                if (editId) {
+                    await updateProduct(parseInt(editId), payload, adminPass);
+                    showAlert('محصول ویرایش شد ✓');
+                } else {
+                    await createProduct(payload, adminPass);
+                    showAlert('محصول جدید اضافه شد ✓');
+                }
+                resetForm();
+                await loadProducts();
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        }
+
+        function editProduct(id) {
+            const p = adminProducts.find(x => x.id === id);
+            if (!p) return;
+            document.getElementById('editId').value = p.id;
+            document.getElementById('pName').value = p.name;
+            document.getElementById('pCategory').value = p.category;
+            document.getElementById('pPrice').value = p.price;
+            document.getElementById('pOldPrice').value = p.oldPrice || '';
+            document.getElementById('pBadge').value = p.badge || '';
+            document.getElementById('pDesc').value = p.description || '';
+            document.querySelectorAll('input[name="size"]').forEach(el => el.checked = p.sizes.includes(el.value));
+            document.querySelectorAll('input[name="color"]').forEach(el => el.checked = p.colors.includes(el.value));
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-edit"></i> ویرایش محصول';
+            document.getElementById('saveBtn').innerHTML = '<i class="fas fa-save"></i> ذخیره تغییرات';
+            document.getElementById('cancelBtn').style.display = 'inline-block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelEdit() { resetForm(); }
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('editId').value = '';
+            document.getElementById('formTitle').innerHTML = '<i class="fas fa-plus-circle"></i> افزودن محصول جدید';
+            document.getElementById('saveBtn').innerHTML = '<i class="fas fa-save"></i> ذخیره';
+            document.getElementById('cancelBtn').style.display = 'none';
+            document.querySelectorAll('input[name="size"]').forEach(el => el.checked = ['M','L','XL'].includes(el.value));
+            document.querySelectorAll('input[name="color"]').forEach(el => el.checked = ['black','white'].includes(el.value));
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('آیا از حذف این محصول مطمئن هستید؟')) return;
+            try {
+                await deleteProductApi(id, adminPass);
+                showAlert('محصول حذف شد');
+                await loadProducts();
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        }
+
+        async function doReset() {
+            if (!confirm('تمام محصولات به ۱۲ محصول پیش‌فرض برمی‌گردد. مطمئنید؟')) return;
+            try {
+                await resetProducts(adminPass);
+                showAlert('به پیش‌فرض بازگشتید', 'info');
+                await loadProducts();
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        }
+
+        async function loadOrders() {
+            const section = document.getElementById('ordersSection');
+            section.style.display = 'block';
+            try {
+                const orders = await fetchOrders(adminPass);
+                if (orders.length === 0) {
+                    document.getElementById('ordersList').innerHTML = '<p style="color:#6b7280;">هنوز سفارشی ثبت نشده.</p>';
+                } else {
+                    document.getElementById('ordersList').innerHTML = orders.map(o => `
+                        <div style="border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin-bottom:12px;">
+                            <strong>سفارش #${o.id}</strong> — ${new Date(o.createdAt).toLocaleString('fa-IR')}<br>
+                            مشتری: ${o.customer?.name || '—'} | تلفن: ${o.customer?.phone || '—'}<br>
+                            جمع: ${Number(o.total).toLocaleString('fa-IR')} تومان | وضعیت: ${o.status}<br>
+                            اقلام: ${o.items.map(i => i.name + ' ×' + i.qty).join('، ')}
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                showAlert(err.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
